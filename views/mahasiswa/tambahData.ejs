@@ -1,0 +1,28 @@
+<%- include('../partials/headers')  %>
+
+<div class="container create contents">
+
+    <h1>Create blogs</h1>
+
+
+    <form action="/add-mhs/" method="post">
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label for="email">Nama :</label>
+                <input type="text" class="form-control" id="nama" name="nama" placeholder="your emails">
+            </div>
+            <div class="form-group">
+                <label for="snippets">NIM</label>
+                <input type="text" class="form-control" id="nim" name="nim" placeholder="yours snippets">
+            </div>
+            <div class="form-group">
+                <label for="snippets">Jurusan</label>
+                <input type="text" class="form-control" id="jurusan" name="jurusan" placeholder="yours snippets">
+            </div>
+            <button type="submit" class="btn btn-primary" value="create data">submit</button>
+        </div>
+    </form>
+</div>
+
+
+<%- include('../partials/footers')  %>

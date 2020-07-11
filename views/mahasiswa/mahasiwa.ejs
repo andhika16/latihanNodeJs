@@ -1,0 +1,25 @@
+<%- include('../partials/headers')  %>
+
+<div class="container">
+    <h1>Mahasiswa</h1>
+
+    <h4>Daftar nama Mahasiswa</h4>
+    <% if(mahasiswa.length > 0){ %>
+
+    <% mahasiswa.forEach((mhs)=>{ %>
+    <a href="/details/<%= mhs._id %> " class="link">
+        <ul>
+            <li>Nama : <%= mhs.nama %> </li>
+            <li>NIM : <%= mhs.nim %></li>
+            <li>Jurusan: <%= mhs.jurusan %></li>
+        </ul>
+    </a>
+    <% }) %>
+
+
+    <% } %>
+
+
+</div>
+
+<%- include('../partials/footers')  %>
