@@ -1,0 +1,32 @@
+<%- include('../partials/headers')  %>
+
+<div class="container">
+    <h1>Mahasiswa</h1>
+    <div class="row">
+        <div class="col">
+            <h4>Daftar nama Mahasiswa</h4>
+            <% if(mahasiswa.length > 0){ %>
+
+            <% mahasiswa.forEach((mhs)=>{ %>
+            <a href="/mahasiswa/<%= mhs._id %> " class="link">
+                <ul>
+                    <li>Nama : <%= mhs.nama %> </li>
+                    <li>NIM : <%= mhs.nim %></li>
+                    <li>Jurusan: <%= mhs.jurusan %></li>
+                </ul>
+            </a>
+            <% }) %>
+
+
+            <% } %>
+        </div>
+        <div class="col">
+            <a href="/mahasiswa/tambahData" class="badge badge-primary">Tambah Data Mahasiswa</a>
+        </div>
+    </div>
+
+
+
+</div>
+
+<%- include('../partials/footers')  %>
