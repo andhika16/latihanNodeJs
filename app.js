@@ -3,7 +3,7 @@ const app = express();
 const mongoose = require('mongoose');
 const port = 3000;
 const flash = require('connect-flash');
-const expresslayout = require('express-ejs-layouts')
+const expresslayout = require('express-ejs-layouts');
 
 // middleware
 app.use(expresslayout);
