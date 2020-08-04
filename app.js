@@ -36,5 +36,4 @@ mongoose.connect(db_mhs, {
 
 // router
 app.use('/', require('./routes/index'));
-app.use('/users', require('./routes/users'));
 app.use('/mahasiswa', require('./routes/mhs_routes'));
