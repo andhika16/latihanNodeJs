@@ -6,7 +6,9 @@ const Schema = mongoose.Schema;
 const mahasiswaSchema = new Schema({
     nama: {
         type: String,
-        required: true
+        required: true,
+        unique: true,
+
     },
     nim: {
         type: String,
@@ -16,10 +18,10 @@ const mahasiswaSchema = new Schema({
         type: String,
         required: true
     }
-}, { timestamps: true });
+}, {
+    timestamps: true
+});
 
 const Mahasiswa = mongoose.model('Mahasiswa', mahasiswaSchema);
 
 module.exports = Mahasiswa;
-
-

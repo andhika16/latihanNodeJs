@@ -2,20 +2,27 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const port = 3000;
-const mhs_routes = require('./routes/mhs_routes')
+const flash = require('connect-flash');
+const expresslayout = require('express-ejs-layouts')
 
 // middleware
+app.use(expresslayout);
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(express.urlencoded({
     extended: true
-}))
+}));
+// flash middleware flash
+app.use(flash());
+
+
 // connect to database
-const db_mhs = 'mongodb+srv://andhika:dhika.12345@node-tuts.4yfq2.mongodb.net/daftar_mahasiswa?retryWrites=true&w=majority'
+const db_mhs = require('./config/keys')
 mongoose.connect(db_mhs, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
-        useFindAndModify: false
+        useFindAndModify: false,
+        useCreateIndex: true
     })
     .then((result) => {
         app.listen(port, () => {
@@ -27,21 +34,7 @@ mongoose.connect(db_mhs, {
 
 
 
-app.get('/about', (req, res) => {
-    res.render('about/about.ejs', {
-        title: 'About'
-    });
-});
-
-app.get('/', (req, res) => {
-    res.render('index', {
-        title: 'Home'
-    });
-});
-app.use('/mahasiswa', mhs_routes);
-
-app.use((req, res) => {
-    res.status(404).render('404', {
-        title: '404'
-    });
-});
+// router
+app.use('/', require('./routes/index'));
+app.use('/users', require('./routes/users'));
+app.use('/mahasiswa', require('./routes/mhs_routes'));

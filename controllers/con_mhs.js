@@ -1,4 +1,4 @@
-const Mahasiswa = require('../modules/Mahasiswa')
+const Mahasiswa = require('../model/Mahasiswa')
 
 const mhs_index = (req, res) => {
     Mahasiswa.find()
@@ -49,7 +49,9 @@ const mhs_delete = (req, res) => {
 
 }
 const mhs_create = (req, res) => {
+
     const mahasiswa = new Mahasiswa(req.body);
+
     mahasiswa.save()
         .then((result) => {
             res.redirect('/mahasiswa')
