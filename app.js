@@ -6,6 +6,9 @@ const flash = require('connect-flash');
 const expresslayout = require('express-ejs-layouts');
 const session = require('express-session');
 
+app.listen(port, () => {
+    console.log(`Server terhubung ${port}`)
+});
 // middleware
 app.use(expresslayout);
 app.set('view engine', 'ejs');
@@ -17,7 +20,7 @@ app.use(session({
     secret: 'secret',
     resave: true,
     saveUninitialized: true
-}))
+}));
 // flash middleware flash
 app.use(flash());
 
@@ -31,9 +34,10 @@ app.use((req, res, next) => {
 });
 // router
 app.use('/mahasiswa', require('./routes/mhs_routes'));
+app.use('/users', require('./routes/users'));
 app.use('/', require('./routes/index'));
 // connect to database
-const db_mhs = require('./config/keys')
+const db_mhs = require('./config/keys');
 mongoose.connect(db_mhs, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
@@ -41,16 +45,18 @@ mongoose.connect(db_mhs, {
         useCreateIndex: true
     })
     .then((result) => {
-        app.listen(port, () => {
-            console.log(`mongodb connection on ${port}`)
-        })
+        console.log(`database mahasiswa terhubung`);
     })
-    .catch(err => console.log(err))
+    .catch(err => console.log(err));
 
+const db_users = require('./config/keys');
 
+mongoose.connect(db_users, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}).then(result => {
+    console.log(`database users terhubung ${port}`);
 
-
-// router
-app.use('/mahasiswa', require('./routes/mhs_routes'));
-app.use('/users', require('./routes/users'));
-app.use('/', require('./routes/index'));
+}).catch(err => {
+    console.log(err);
+})

@@ -1,7 +1,9 @@
 const Mahasiswa = require('../model/Mahasiswa')
 const errors = [];
 const mhs_index = (req, res) => {
-    Mahasiswa.find()
+    Mahasiswa.find().sort({
+            createdAt: -1
+        })
         .then((result) => {
             res.render('mahasiswa/index', {
                 title: 'mahasiswa',
@@ -78,7 +80,11 @@ const mhs_create = (req, res) => {
     //     })
     // }
 
-    const mahasiswa = new Mahasiswa(nama, nim, jurusan);
+    const mahasiswa = new Mahasiswa({
+        nama,
+        nim,
+        jurusan
+    });
     mahasiswa.save()
         .then((result) => {
             req.flash('success_msg', 'Mahasiswa Berhasil ditambahkan');
@@ -97,8 +103,26 @@ const mhs_update = (req, res) => {
     let update_mahasiswa = req.body
 
 
+    const {
+        nama,
+        nim,
+        jurusan
+    } = update_mahasiswa;
+
+    if (!nama || !nim || !jurusan) {
+        res.render('mahasiswa/tambahData', {
+            title: 'Tambah Data',
+            errors
+        });
+        errors.push({
+            msg: 'Field harus di isi'
+        })
+    }
+
+
     Mahasiswa.findByIdAndUpdate(id, update_mahasiswa)
         .then(result => {
+            req.flash('success_msg', 'Mahasiswa Berhasil diupdate');
             res.redirect('/mahasiswa');
         })
         .catch(err => console.log(err))

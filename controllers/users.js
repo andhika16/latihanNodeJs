@@ -1,3 +1,6 @@
+const User = require('../model/users');
+const bcrypt = require('bcrypt');
+
 const login = (req, res) => {
     res.render('users/login', {
         title: 'User Login'
@@ -9,14 +12,105 @@ const register = (req, res) => {
         title: 'User Registration'
     })
 }
+// register handle
+const register_post = (req, res) => {
+    const errors = [];
+    const {
+        name,
+        email,
+        password,
+        password2
+    } = req.body;
 
+
+    if (!name || !email || !password || !password2) {
+
+        errors.push({
+            msg: 'Field harus diisi'
+        });
+
+    }
+
+    if (password !== password2) {
+        errors.push({
+            msg: 'Password not match !'
+        })
+    }
+
+    if (password.length < 3) {
+        errors.push({
+            msg: 'Password too short'
+        })
+    }
+
+    if (errors.length > 0) {
+        res.render('users/register', {
+            title: 'User Registration',
+            errors,
+            name,
+            email,
+            password,
+            password2
+        });
+    } else {
+        // validation passed
+        User.findOne({
+                email: email
+            }).then(user => {
+                if (user) {
+                    // User exist
+                    errors.push({
+                        msg: 'Email Is Registered'
+                    });
+                    res.render('users/register', {
+                        title: 'User registration',
+                        errors,
+                        name,
+                        email,
+                        password,
+                        password2
+                    });
+                } else {
+                    const newUser = new User({
+                        name,
+                        email,
+                        password
+                    });
+
+                    bcrypt.genSalt(10, (err, salt) => {
+                        bcrypt.hash(newUser.password, salt, (err, hash) => {
+                            if (err) throw err;
+                            newUser.password = hash;
+
+                            newUser.save()
+                                .then(result => {
+                                    req.flash(
+                                        'success_msg',
+                                        'You are now registered'
+                                    );
+                                    res.redirect('/users/login');
+                                })
+                                .catch(err => {
+                                    console.log(err);
+                                })
+                        })
+                    })
+                }
+            })
+            .catch(err => {
+                console.log(err)
+            })
+
+    }
+
+
+
+}
 const login_post = (req, res) => {
 
 }
 
-const register_post = (req, res) => {
 
-}
 
 module.exports = {
     login,
