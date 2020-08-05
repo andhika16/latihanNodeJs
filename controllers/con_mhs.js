@@ -1,5 +1,5 @@
 const Mahasiswa = require('../model/Mahasiswa')
-
+const errors = [];
 const mhs_index = (req, res) => {
     Mahasiswa.find()
         .then((result) => {
@@ -50,11 +50,39 @@ const mhs_delete = (req, res) => {
 }
 const mhs_create = (req, res) => {
 
-    const mahasiswa = new Mahasiswa(req.body);
 
+
+    const {
+        nama,
+        nim,
+        jurusan
+    } = req.body;
+
+    if (!nama || !nim || !jurusan) {
+        res.render('mahasiswa/tambahData', {
+            title: 'Tambah Data',
+            errors
+        });
+        errors.push({
+            msg: 'Field harus di isi'
+        })
+    }
+
+    // if (errors.length > 0) {
+    //     res.render('mahasiswa/tambahData', {
+    //         title: 'Tambah Data',
+    //         nama,
+    //         nim,
+    //         jurusan,
+    //         errors
+    //     })
+    // }
+
+    const mahasiswa = new Mahasiswa(nama, nim, jurusan);
     mahasiswa.save()
         .then((result) => {
-            res.redirect('/mahasiswa')
+            req.flash('success_msg', 'Mahasiswa Berhasil ditambahkan');
+            res.redirect('/mahasiswa');
         })
         .catch((err) => {
             console.log(err);
