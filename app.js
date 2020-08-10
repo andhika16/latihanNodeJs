@@ -1,14 +1,13 @@
 "use strict"
 const express = require('express');
 const app = express();
-const mongoose = require('mongoose');
 const port = 3000;
 const flash = require('connect-flash');
 const expresslayout = require('express-ejs-layouts');
 const session = require('express-session');
 const passport = require('passport');
 const dbase = require('./config/connect');
-
+// passport auth
 require('./config/passport')(passport)
 
 app.listen(port, () => {
