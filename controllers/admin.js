@@ -21,7 +21,7 @@ const userDetail = (req, res) => {
     User.findById(id).then(
         result => {
             res.render('admin/users', {
-                title: 'user detail',
+                title: 'User Detail',
                 user: result
             })
         }
