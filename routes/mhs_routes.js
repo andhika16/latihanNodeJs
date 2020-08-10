@@ -1,6 +1,9 @@
 const express = require('express');
 const route = express.Router();
 const {
+    ensureAuthenticated
+} = require('../config/auth');
+const {
     mhs_create,
     mhs_index,
     mhs_detail,
@@ -10,12 +13,12 @@ const {
 } = require('../controllers/con_mhs');
 
 
-route.get('/tambahData', mhs_create_get)
-route.post('/', mhs_create);
-route.post('/ubah/:id', mhs_update)
-route.get('/:id', mhs_detail);
-route.delete('/:id', mhs_delete)
-route.get('/', mhs_index);
+route.get('/', ensureAuthenticated, mhs_index);
+route.get('/tambahData', ensureAuthenticated, mhs_create_get)
+route.post('/', ensureAuthenticated, mhs_create);
+route.post('/ubah/:id', ensureAuthenticated, mhs_update)
+route.get('/:id', ensureAuthenticated, mhs_detail);
+route.delete('/:id', ensureAuthenticated, mhs_delete)
 
 
 

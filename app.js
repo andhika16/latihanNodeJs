@@ -1,3 +1,4 @@
+"use strict"
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
@@ -5,6 +6,10 @@ const port = 3000;
 const flash = require('connect-flash');
 const expresslayout = require('express-ejs-layouts');
 const session = require('express-session');
+const passport = require('passport');
+const dbase = require('./config/connect');
+
+require('./config/passport')(passport)
 
 app.listen(port, () => {
     console.log(`Server terhubung ${port}`)
@@ -16,11 +21,20 @@ app.use(express.static('public'));
 app.use(express.urlencoded({
     extended: true
 }));
+// layout
+// app.set('layout', 'LPublic');
+
+
+// session
 app.use(session({
     secret: 'secret',
     resave: true,
     saveUninitialized: true
 }));
+// passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
 // flash middleware flash
 app.use(flash());
 
@@ -38,25 +52,6 @@ app.use('/users', require('./routes/users'));
 app.use('/', require('./routes/index'));
 // connect to database
 const db_mhs = require('./config/keys');
-mongoose.connect(db_mhs, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        useFindAndModify: false,
-        useCreateIndex: true
-    })
-    .then((result) => {
-        console.log(`database mahasiswa terhubung`);
-    })
-    .catch(err => console.log(err));
-
 const db_users = require('./config/keys');
-
-mongoose.connect(db_users, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}).then(result => {
-    console.log(`database users terhubung ${port}`);
-
-}).catch(err => {
-    console.log(err);
-})
+dbase(db_mhs, 'mahasiswa');
+dbase(db_users, 'users');

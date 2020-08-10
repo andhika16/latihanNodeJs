@@ -3,11 +3,16 @@ const {
     login,
     register,
     login_post,
-    register_post
-} = require('../controllers/users')
-router.get('/login', login)
-router.get('/register', register)
-router.post('/login', login_post)
-router.post('/register', register_post)
+    register_post,
+    logout
+} = require('../controllers/users');
+const {
+    forwardAuthenticated
+} = require('../config/auth');
+router.get('/logout', logout)
+router.get('/login', forwardAuthenticated, login)
+router.get('/register', forwardAuthenticated, register)
+router.post('/login', forwardAuthenticated, login_post)
+router.post('/register', forwardAuthenticated, register_post)
 
 module.exports = router;
