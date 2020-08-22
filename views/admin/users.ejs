@@ -49,7 +49,7 @@
     const trashcan = document.querySelector('a.badge')
 
     trashcan.addEventListener('click', (e) => {
-        const endpoin = `/mahasiswa/${trashcan.dataset.doc}`
+        const endpoin = `/users/${trashcan.dataset.doc}`
         fetch(endpoin, {
             method: 'DELETE'
         }).then(response =>

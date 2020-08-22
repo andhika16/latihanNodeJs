@@ -107,6 +107,21 @@ const register_post = (req, res) => {
 
 
 }
+// delete handler
+const users_delete = (req, res) => {
+    const id = req.params.id;
+    User.findByIdAndDelete(id)
+        .then((result) => {
+            res.json({
+                redirect: '/admin'
+            })
+        })
+        .catch(err => {
+            console.log(err)
+
+        })
+
+}
 // login handler
 const login_post = (req, res, next) => {
     passport.authenticate('local', {
@@ -114,12 +129,13 @@ const login_post = (req, res, next) => {
         failureRedirect: '/users/login',
         failureFlash: true
     })(req, res, next)
+
 };
 // logout handler
 const logout = (req, res) => {
     req.logOut();
     req.flash('success_msg', 'You are logged out');
-    res.redirect('/users/login')
+    res.redirect('/users/login');
 };
 
 
@@ -128,5 +144,6 @@ module.exports = {
     register,
     login_post,
     register_post,
-    logout
+    logout,
+    users_delete
 }

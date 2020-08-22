@@ -21,7 +21,6 @@ app.use(express.urlencoded({
     extended: true
 }));
 // layout
-// app.set('layout', 'LPublic');
 
 
 // session

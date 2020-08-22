@@ -4,12 +4,15 @@ const {
     userData,
     userDetail
 } = require('../controllers/admin');
+const {
+    ensureAuthenticated
+} = require('../config/auth');
 
 
 
 
-router.get('/', userData);
-router.get('/users/:id', userDetail)
+router.get('/', ensureAuthenticated, userData);
+router.get('/users/:id', ensureAuthenticated, userDetail)
 
 
 module.exports = router;
