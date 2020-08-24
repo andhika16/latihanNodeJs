@@ -11,5 +11,15 @@ module.exports = {
             return next();
         }
         res.redirect('/about');
+    },
+    authRole: function (role) {
+        return (req, res, next) => {
+            if (user.role !== role) {
+                res.status(401)
+                return req.flash('error_msg', 'Your not allowed')
+            }
+
+            next();
+        }
     }
 };

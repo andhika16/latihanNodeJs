@@ -7,7 +7,8 @@ const {
     logout
 } = require('../controllers/users');
 const {
-    forwardAuthenticated
+    forwardAuthenticated,
+    authRole
 } = require('../config/auth');
 router.get('/logout', logout)
 router.get('/login', forwardAuthenticated, login)

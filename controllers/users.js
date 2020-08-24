@@ -1,6 +1,12 @@
-const User = require('../model/users');
+const {
+    User,
+    ROLE
+} = require('../model/users');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
+const {
+    authRole
+} = require('../config/auth');
 
 const login = (req, res) => {
     res.render('users/login', {
@@ -109,11 +115,23 @@ const register_post = (req, res) => {
 }
 // login handler
 const login_post = (req, res, next) => {
-    passport.authenticate('local', {
-        successRedirect: '/about',
-        failureRedirect: '/users/login',
-        failureFlash: true
-    })(req, res, next)
+
+    passport.authenticate('local', (err, user) => {
+        if (user) {
+            if (err) return next(err);
+            if (user.role === 'admin') {
+                return res.redirect('/about');
+            } else {
+                res.redirect('/');
+                req.flash('error_msg', 'youre not allowed')
+            }
+        } else {
+            res.redirect('/users/login');
+            req.flash('error_msg', 'Please wrong password')
+        }
+    })(req, res, next);
+
+
 };
 // logout handler
 const logout = (req, res) => {
@@ -130,3 +148,10 @@ module.exports = {
     register_post,
     logout
 }
+
+
+// {
+//     successRedirect: '/about',
+//     failureRedirect: '/users/login',
+//     failureFlash: true
+// }
