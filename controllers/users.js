@@ -1,12 +1,6 @@
-const {
-    User,
-    ROLE
-} = require('../model/users');
+const User = require('../model/users');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
-const {
-    authRole
-} = require('../config/auth');
 
 const login = (req, res) => {
     res.render('users/login', {
@@ -116,14 +110,15 @@ const register_post = (req, res) => {
 // login handler
 const login_post = (req, res, next) => {
 
+
+
     passport.authenticate('local', (err, user) => {
         if (user) {
             if (err) return next(err);
             if (user.role === 'admin') {
                 return res.redirect('/about');
-            } else {
-                res.redirect('/');
-                req.flash('error_msg', 'youre not allowed')
+            } else if (user.role === 'user') {
+                return res.redirect('/mahasiswa');
             }
         } else {
             res.redirect('/users/login');

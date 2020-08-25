@@ -10,7 +10,7 @@ route.get('/', (req, res) => {
     });
 });
 
-route.get('/about', (req, res) => {
+route.get('/about', ensureAuthenticated, (req, res) => {
     res.render('about/about.ejs', {
         title: 'About'
     });
