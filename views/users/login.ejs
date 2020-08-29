@@ -6,14 +6,15 @@
             <form action="/users/login" method="POST">
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" id="email" name="email" class="form-control" placeholder="Enter Email" />
+                    <input type="email" id="email" name="email" class="form-control" placeholder="Enter Email"
+                        required />
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
                     <input type="password" id="password" name="password" class="form-control"
-                        placeholder="Enter Password" />
+                        placeholder="Enter Password" required />
                 </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <div class="custom-control custom-checkbox">
                         <input type="checkbox" class="custom-control-input" id="admin" name="role" value="admin">
                         <label class="custom-control-label" for="admin">Admin</label>
@@ -24,7 +25,7 @@
                         <input type="checkbox" class="custom-control-input" id="user" name="role" value="user">
                         <label class="custom-control-label" for="user">User</label>
                     </div>
-                </div>
+                </div> -->
 
                 <button type="submit" class="btn btn-primary btn-block">Login</button>
             </form>

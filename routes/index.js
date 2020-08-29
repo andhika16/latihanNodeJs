@@ -2,7 +2,7 @@ const route = require('express').Router();
 const {
     ensureAuthenticated
 } = require('../config/auth');
-
+const ROLE = require('../model/users');
 
 route.get('/', (req, res) => {
     res.render('welcome', {

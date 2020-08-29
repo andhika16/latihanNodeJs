@@ -1,4 +1,5 @@
 const User = require('../model/users');
+const ROLE = require('../model/users');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
 
@@ -110,19 +111,17 @@ const register_post = (req, res) => {
 // login handler
 const login_post = (req, res, next) => {
 
-
-
     passport.authenticate('local', (err, user) => {
         if (user) {
             if (err) return next(err);
-            if (user.role === 'admin') {
-                return res.redirect('/about');
-            } else if (user.role === 'user') {
-                return res.redirect('/mahasiswa');
+            if (user.role !== 'admin') {
+                res.redirect('/about');
+            } else {
+                res.redirect('/mahasiswa');
             }
         } else {
+            req.flash('error_msg', 'Account Not Registered')
             res.redirect('/users/login');
-            req.flash('error_msg', 'Please wrong password')
         }
     })(req, res, next);
 

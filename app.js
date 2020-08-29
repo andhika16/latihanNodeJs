@@ -7,20 +7,27 @@ const expresslayout = require('express-ejs-layouts');
 const session = require('express-session');
 const passport = require('passport');
 const dbase = require('./config/connect');
+const exphbs = require('express-handlebars');
 // passport auth
 require('./config/passport')(passport)
 
 app.listen(port, () => {
     console.log(`Server terhubung ${port}`)
 });
-// middleware
+// layout
+app.engine('.hbs', exphbs({
+    extname: '.hbs'
+}));
+app.set('view engine', '.hbs');
 app.use(expresslayout);
 app.set('view engine', 'ejs');
+// middleware 
 app.use(express.static('public'));
 app.use(express.urlencoded({
     extended: true
 }));
-// layout
+
+
 // app.set('layout', 'LPublic');
 
 
