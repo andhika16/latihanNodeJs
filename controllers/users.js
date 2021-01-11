@@ -108,6 +108,21 @@ const register_post = (req, res) => {
 
 
 }
+// delete handler
+const users_delete = (req, res) => {
+    const id = req.params.id;
+    User.findByIdAndDelete(id)
+        .then((result) => {
+            res.json({
+                redirect: '/admin'
+            })
+        })
+        .catch(err => {
+            console.log(err)
+
+        })
+
+}
 // login handler
 const login_post = (req, res, next) => {
 
@@ -131,7 +146,7 @@ const login_post = (req, res, next) => {
 const logout = (req, res) => {
     req.logOut();
     req.flash('success_msg', 'You are logged out');
-    res.redirect('/users/login')
+    res.redirect('/users/login');
 };
 
 

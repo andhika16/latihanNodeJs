@@ -26,10 +26,7 @@ app.use(express.static('public'));
 app.use(express.urlencoded({
     extended: true
 }));
-
-
-// app.set('layout', 'LPublic');
-
+// layout
 
 // session
 app.use(session({
@@ -55,6 +52,7 @@ app.use((req, res, next) => {
 // router
 app.use('/mahasiswa', require('./routes/mhs_routes'));
 app.use('/users', require('./routes/users'));
+app.use('/admin', require('./routes/admin'));
 app.use('/', require('./routes/index'));
 // connect to database
 const db_mhs = require('./config/keys');

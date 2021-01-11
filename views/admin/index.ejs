@@ -1,0 +1,27 @@
+<div class="container">
+    <h1>User data</h1>
+    <div class="row">
+        <div class="col">
+            <h4>Daftar user</h4>
+            <%- include('../partials/message') %>
+            <% if(users.length > 0){ %>
+
+            <% users.forEach((user)=>{ %>
+            <a href="/admin/users/<%= user._id %> " class="link">
+                <ul>
+                    <li>Nama : <%= user.name %> </li>
+                    <li>email : <%= user.email %> </li>
+                </ul>
+            </a>
+            <% }) %>
+
+
+            <% } else { %>
+            <h2>Maaf tidak ada yang ditampikan</h2>
+            <% } %>
+        </div>
+    </div>
+
+
+
+</div>
