@@ -1,12 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const {
-    userData,
-    userDetail
-} = require('../controllers/admin');
-const {
-    ensureAuthenticated
-} = require('../config/auth');
+const {userData,userDetail} = require('../controllers/admin');
+const {ensureAuthenticated} = require('../config/auth');
 
 
 

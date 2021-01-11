@@ -7,7 +7,6 @@ const expresslayout = require('express-ejs-layouts');
 const session = require('express-session');
 const passport = require('passport');
 const dbase = require('./config/connect');
-const morgan = require('morgan');
 // passport auth
 require('./config/passport')(passport)
 
@@ -23,8 +22,6 @@ app.use(express.urlencoded({
 }));
 // layout
 
-// morgan
-app.use(morgan('dev'));
 // session
 app.use(session({
     secret: 'secret',

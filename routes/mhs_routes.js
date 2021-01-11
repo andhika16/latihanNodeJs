@@ -1,8 +1,6 @@
 const express = require('express');
 const route = express.Router();
-const {
-    ensureAuthenticated
-} = require('../config/auth');
+const {ensureAuthenticated} = require('../config/auth');
 const {
     mhs_create,
     mhs_index,
