@@ -1,10 +1,8 @@
 const route = require('express').Router();
-const {
-    ensureAuthenticated
-} = require('../config/auth');
+const {ensureAuthenticated,forwardAuthenticated} = require('../config/auth');
 
 
-route.get('/', (req, res) => {
+route.get('/', forwardAuthenticated, (req, res) => {
     res.render('welcome', {
         title: 'Home'
     });
